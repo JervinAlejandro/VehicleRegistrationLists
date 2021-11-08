@@ -1,0 +1,30 @@
+C:\Users\30009690\Downloads\Visual Studio\Week13\Lists\bin\Debug\Lists.exe.config
+C:\Users\30009690\Downloads\Visual Studio\Week13\Lists\bin\Debug\Lists.exe
+C:\Users\30009690\Downloads\Visual Studio\Week13\Lists\bin\Debug\Lists.pdb
+C:\Users\30009690\Downloads\Visual Studio\Week13\Lists\obj\Debug\Lists.csprojAssemblyReference.cache
+C:\Users\30009690\Downloads\Visual Studio\Week13\Lists\obj\Debug\Lists.Lists.resources
+C:\Users\30009690\Downloads\Visual Studio\Week13\Lists\obj\Debug\Lists.Properties.Resources.resources
+C:\Users\30009690\Downloads\Visual Studio\Week13\Lists\obj\Debug\Lists.csproj.GenerateResource.cache
+C:\Users\30009690\Downloads\Visual Studio\Week13\Lists\obj\Debug\Lists.csproj.CoreCompileInputs.cache
+C:\Users\30009690\Downloads\Visual Studio\Week13\Lists\obj\Debug\Lists.exe
+C:\Users\30009690\Downloads\Visual Studio\Week13\Lists\obj\Debug\Lists.pdb
+C:\Users\30009690\Downloads\Week13\Lists\bin\Debug\Lists.exe.config
+C:\Users\30009690\Downloads\Week13\Lists\bin\Debug\Lists.exe
+C:\Users\30009690\Downloads\Week13\Lists\bin\Debug\Lists.pdb
+C:\Users\30009690\Downloads\Week13\Lists\obj\Debug\Lists.csprojAssemblyReference.cache
+C:\Users\30009690\Downloads\Week13\Lists\obj\Debug\Lists.Lists.resources
+C:\Users\30009690\Downloads\Week13\Lists\obj\Debug\Lists.Properties.Resources.resources
+C:\Users\30009690\Downloads\Week13\Lists\obj\Debug\Lists.csproj.GenerateResource.cache
+C:\Users\30009690\Downloads\Week13\Lists\obj\Debug\Lists.csproj.CoreCompileInputs.cache
+C:\Users\30009690\Downloads\Week13\Lists\obj\Debug\Lists.exe
+C:\Users\30009690\Downloads\Week13\Lists\obj\Debug\Lists.pdb
+C:\Users\INO\Desktop\TAFE\C Sharp One\Assessment_Task_3\SourceFile\Lists\bin\Debug\Lists.exe.config
+C:\Users\INO\Desktop\TAFE\C Sharp One\Assessment_Task_3\SourceFile\Lists\bin\Debug\Lists.exe
+C:\Users\INO\Desktop\TAFE\C Sharp One\Assessment_Task_3\SourceFile\Lists\bin\Debug\Lists.pdb
+C:\Users\INO\Desktop\TAFE\C Sharp One\Assessment_Task_3\SourceFile\Lists\obj\Debug\Lists.csproj.AssemblyReference.cache
+C:\Users\INO\Desktop\TAFE\C Sharp One\Assessment_Task_3\SourceFile\Lists\obj\Debug\Lists.Lists.resources
+C:\Users\INO\Desktop\TAFE\C Sharp One\Assessment_Task_3\SourceFile\Lists\obj\Debug\Lists.Properties.Resources.resources
+C:\Users\INO\Desktop\TAFE\C Sharp One\Assessment_Task_3\SourceFile\Lists\obj\Debug\Lists.csproj.GenerateResource.cache
+C:\Users\INO\Desktop\TAFE\C Sharp One\Assessment_Task_3\SourceFile\Lists\obj\Debug\Lists.csproj.CoreCompileInputs.cache
+C:\Users\INO\Desktop\TAFE\C Sharp One\Assessment_Task_3\SourceFile\Lists\obj\Debug\Lists.exe
+C:\Users\INO\Desktop\TAFE\C Sharp One\Assessment_Task_3\SourceFile\Lists\obj\Debug\Lists.pdb
