@@ -25,7 +25,7 @@ namespace Lists
         private void DisplayList()
         {
             listDisplay.Items.Clear();
-            //RegoPlate.Sort();
+            RegoPlate.Sort();
             foreach (var rego in RegoPlate)
             {
                 listDisplay.Items.Add(rego);
@@ -48,13 +48,13 @@ namespace Lists
         }
         private void listDisplay_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(listDisplay.SelectedIndex > -1)
+            if(listDisplay.SelectedIndex > -1 )
             {
-                textBoxInput.Text = listDisplay.SelectedItem.ToString();
-            }      
-                
+                singleDataTextBox.Text = listDisplay.SelectedItem.ToString();
+            }  
         }
-        // Prevent user from pressing enter key
+
+        // Prevent user from pressing ENTER key
         private void textBoxInput_KeyPress(object sender, KeyPressEventArgs e)
         {
             if(e.KeyChar == (char)Keys.Enter)
@@ -63,8 +63,16 @@ namespace Lists
             }
         }
 
-        #endregion FUNCTIONS
+        // Prevent user from entering any text or numbers
+        private void singleDataTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) || (e.KeyChar == (char)Keys.Enter) || (char.IsDigit(e.KeyChar)))
+            {
+                e.Handled = true;
+            }
+        }
 
+        #endregion FUNCTIONS
 
         #region BUTTONS
         private void addButton_Click(object sender, EventArgs e)
@@ -83,14 +91,25 @@ namespace Lists
            
         }
 
+        // Delete Method 1
+        private void listDisplay_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            MessageBox.Show("Delete Success");
+            RegoPlate.Remove(singleDataTextBox.Text);
+            singleDataTextBox.Clear();
+            DisplayList();
+        }
+
+        // Delete Method 2
         private void deleteButton_Click(object sender, EventArgs e)
         {
-            if (!String.IsNullOrEmpty(textBoxInput.Text) && RegoPlate.Contains(textBoxInput.Text))
+            if (!String.IsNullOrEmpty(textBoxInput.Text) && RegoPlate.Contains(textBoxInput.Text) )
             {
                 RegoPlate.Remove(textBoxInput.Text);
                 textBoxInput.Clear();
                 textBoxInput.Select();
                 DisplayList();
+
             }
             else
             {
@@ -114,20 +133,32 @@ namespace Lists
             }
 
         }
+
+        // Binary Search
         private void searchButton_Click(object sender, EventArgs e)
         {
-            RegoPlate.Sort();
             DisplayList();
             if (RegoPlate.BinarySearch(textBoxInput.Text) >= 0) // >= 0 is a comparator
             {
                 listDisplay.SelectedItem = textBoxInput.Text;
-                
                 MessageBox.Show("Found");
+                textBoxInput.Clear();
             }
             else
+            {
                 MessageBox.Show("Not Found");
-            textBoxInput.Clear(); // Clear textbox once found
+                textBoxInput.Clear();
+                textBoxInput.Select();
+            }
+            
         }
+
+        // Linear Search
+        private void buttonLinSearch_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void openButton_Click(object sender, EventArgs e)
         {
             string fileName = "demo_nn.txt";
@@ -187,13 +218,13 @@ namespace Lists
             }
         }
 
-
         private void buttonReset_Click(object sender, EventArgs e)
         {
             RegoPlate.Clear();
             textBoxInput.Clear();
             DisplayList();
         }
+
 
         #endregion BUTTONS
 

@@ -37,9 +37,10 @@ namespace Lists
             this.openButton = new System.Windows.Forms.Button();
             this.saveButton = new System.Windows.Forms.Button();
             this.buttonEdit = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.buttonLinSearch = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.buttonReset = new System.Windows.Forms.Button();
+            this.singleDataTextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // listDisplay
@@ -47,9 +48,10 @@ namespace Lists
             this.listDisplay.FormattingEnabled = true;
             this.listDisplay.Location = new System.Drawing.Point(12, 103);
             this.listDisplay.Name = "listDisplay";
-            this.listDisplay.Size = new System.Drawing.Size(275, 251);
+            this.listDisplay.Size = new System.Drawing.Size(151, 251);
             this.listDisplay.TabIndex = 0;
             this.listDisplay.SelectedIndexChanged += new System.EventHandler(this.listDisplay_SelectedIndexChanged);
+            this.listDisplay.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listDisplay_MouseDoubleClick);
             // 
             // textBoxInput
             // 
@@ -91,7 +93,7 @@ namespace Lists
             // 
             // openButton
             // 
-            this.openButton.Location = new System.Drawing.Point(200, 402);
+            this.openButton.Location = new System.Drawing.Point(200, 393);
             this.openButton.Name = "openButton";
             this.openButton.Size = new System.Drawing.Size(87, 23);
             this.openButton.TabIndex = 5;
@@ -101,7 +103,7 @@ namespace Lists
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(107, 402);
+            this.saveButton.Location = new System.Drawing.Point(107, 393);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(87, 23);
             this.saveButton.TabIndex = 6;
@@ -119,14 +121,15 @@ namespace Lists
             this.buttonEdit.UseVisualStyleBackColor = true;
             this.buttonEdit.Click += new System.EventHandler(this.buttonEdit_Click);
             // 
-            // button2
+            // buttonLinSearch
             // 
-            this.button2.Location = new System.Drawing.Point(200, 364);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(87, 23);
-            this.button2.TabIndex = 8;
-            this.button2.Text = "LIN SEARCH";
-            this.button2.UseVisualStyleBackColor = true;
+            this.buttonLinSearch.Location = new System.Drawing.Point(200, 364);
+            this.buttonLinSearch.Name = "buttonLinSearch";
+            this.buttonLinSearch.Size = new System.Drawing.Size(87, 23);
+            this.buttonLinSearch.TabIndex = 8;
+            this.buttonLinSearch.Text = "LIN SEARCH";
+            this.buttonLinSearch.UseVisualStyleBackColor = true;
+            this.buttonLinSearch.Click += new System.EventHandler(this.buttonLinSearch_Click);
             // 
             // button4
             // 
@@ -139,7 +142,7 @@ namespace Lists
             // 
             // buttonReset
             // 
-            this.buttonReset.Location = new System.Drawing.Point(12, 403);
+            this.buttonReset.Location = new System.Drawing.Point(12, 393);
             this.buttonReset.Name = "buttonReset";
             this.buttonReset.Size = new System.Drawing.Size(87, 23);
             this.buttonReset.TabIndex = 11;
@@ -147,14 +150,24 @@ namespace Lists
             this.buttonReset.UseVisualStyleBackColor = true;
             this.buttonReset.Click += new System.EventHandler(this.buttonReset_Click);
             // 
+            // singleDataTextBox
+            // 
+            this.singleDataTextBox.Location = new System.Drawing.Point(187, 103);
+            this.singleDataTextBox.Name = "singleDataTextBox";
+            this.singleDataTextBox.Size = new System.Drawing.Size(100, 20);
+            this.singleDataTextBox.TabIndex = 12;
+            this.singleDataTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.singleDataTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.singleDataTextBox_KeyPress);
+            // 
             // Lists
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(299, 443);
+            this.ClientSize = new System.Drawing.Size(299, 427);
+            this.Controls.Add(this.singleDataTextBox);
             this.Controls.Add(this.buttonReset);
             this.Controls.Add(this.button4);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.buttonLinSearch);
             this.Controls.Add(this.buttonEdit);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.openButton);
@@ -183,9 +196,10 @@ namespace Lists
         private System.Windows.Forms.Button openButton;
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Button buttonEdit;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button buttonLinSearch;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button buttonReset;
+        private System.Windows.Forms.TextBox singleDataTextBox;
     }
 }
 
