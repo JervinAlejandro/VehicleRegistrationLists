@@ -29,6 +29,7 @@ namespace Lists
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.listDisplay = new System.Windows.Forms.ListBox();
             this.textBoxInput = new System.Windows.Forms.TextBox();
             this.addButton = new System.Windows.Forms.Button();
@@ -38,9 +39,13 @@ namespace Lists
             this.saveButton = new System.Windows.Forms.Button();
             this.buttonEdit = new System.Windows.Forms.Button();
             this.buttonLinSearch = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.buttonTag = new System.Windows.Forms.Button();
             this.buttonReset = new System.Windows.Forms.Button();
             this.singleDataTextBox = new System.Windows.Forms.TextBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // listDisplay
@@ -50,6 +55,7 @@ namespace Lists
             this.listDisplay.Name = "listDisplay";
             this.listDisplay.Size = new System.Drawing.Size(151, 251);
             this.listDisplay.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.listDisplay, "List of Registration Plates");
             this.listDisplay.SelectedIndexChanged += new System.EventHandler(this.listDisplay_SelectedIndexChanged);
             this.listDisplay.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listDisplay_MouseDoubleClick);
             // 
@@ -59,6 +65,7 @@ namespace Lists
             this.textBoxInput.Name = "textBoxInput";
             this.textBoxInput.Size = new System.Drawing.Size(275, 20);
             this.textBoxInput.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.textBoxInput, "Enter Registration Plate");
             this.textBoxInput.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxInput_KeyPress);
             // 
             // addButton
@@ -68,6 +75,7 @@ namespace Lists
             this.addButton.Size = new System.Drawing.Size(121, 52);
             this.addButton.TabIndex = 2;
             this.addButton.Text = "ENTER";
+            this.toolTip1.SetToolTip(this.addButton, "Add Registration Plate to list");
             this.addButton.UseVisualStyleBackColor = true;
             this.addButton.Click += new System.EventHandler(this.addButton_Click);
             // 
@@ -78,36 +86,40 @@ namespace Lists
             this.deleteButton.Size = new System.Drawing.Size(132, 23);
             this.deleteButton.TabIndex = 3;
             this.deleteButton.Text = "DELETE";
+            this.toolTip1.SetToolTip(this.deleteButton, "Remove Selected Registration Plate from the List");
             this.deleteButton.UseVisualStyleBackColor = true;
             this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
             // 
             // searchButton
             // 
-            this.searchButton.Location = new System.Drawing.Point(107, 364);
+            this.searchButton.Location = new System.Drawing.Point(187, 171);
             this.searchButton.Name = "searchButton";
-            this.searchButton.Size = new System.Drawing.Size(87, 23);
+            this.searchButton.Size = new System.Drawing.Size(100, 23);
             this.searchButton.TabIndex = 4;
             this.searchButton.Text = "BIN SEARCH";
+            this.toolTip1.SetToolTip(this.searchButton, "Search a particular Registration Plate in binary search method");
             this.searchButton.UseVisualStyleBackColor = true;
             this.searchButton.Click += new System.EventHandler(this.searchButton_Click);
             // 
             // openButton
             // 
-            this.openButton.Location = new System.Drawing.Point(200, 393);
+            this.openButton.Location = new System.Drawing.Point(187, 276);
             this.openButton.Name = "openButton";
-            this.openButton.Size = new System.Drawing.Size(87, 23);
+            this.openButton.Size = new System.Drawing.Size(100, 23);
             this.openButton.TabIndex = 5;
             this.openButton.Text = "OPEN";
+            this.toolTip1.SetToolTip(this.openButton, "Open a text file");
             this.openButton.UseVisualStyleBackColor = true;
             this.openButton.Click += new System.EventHandler(this.openButton_Click);
             // 
             // saveButton
             // 
-            this.saveButton.Location = new System.Drawing.Point(107, 393);
+            this.saveButton.Location = new System.Drawing.Point(187, 247);
             this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(87, 23);
+            this.saveButton.Size = new System.Drawing.Size(100, 23);
             this.saveButton.TabIndex = 6;
             this.saveButton.Text = "SAVE";
+            this.toolTip1.SetToolTip(this.saveButton, "Save file to text format");
             this.saveButton.UseVisualStyleBackColor = true;
             this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
@@ -118,35 +130,40 @@ namespace Lists
             this.buttonEdit.Size = new System.Drawing.Size(132, 23);
             this.buttonEdit.TabIndex = 7;
             this.buttonEdit.Text = "EDIT";
+            this.toolTip1.SetToolTip(this.buttonEdit, "Change the selected Registration Plate on the list.");
             this.buttonEdit.UseVisualStyleBackColor = true;
             this.buttonEdit.Click += new System.EventHandler(this.buttonEdit_Click);
             // 
             // buttonLinSearch
             // 
-            this.buttonLinSearch.Location = new System.Drawing.Point(200, 364);
+            this.buttonLinSearch.Location = new System.Drawing.Point(187, 200);
             this.buttonLinSearch.Name = "buttonLinSearch";
-            this.buttonLinSearch.Size = new System.Drawing.Size(87, 23);
+            this.buttonLinSearch.Size = new System.Drawing.Size(100, 23);
             this.buttonLinSearch.TabIndex = 8;
             this.buttonLinSearch.Text = "LIN SEARCH";
+            this.toolTip1.SetToolTip(this.buttonLinSearch, "Search a particular Registration Plate in linear search method");
             this.buttonLinSearch.UseVisualStyleBackColor = true;
             this.buttonLinSearch.Click += new System.EventHandler(this.buttonLinSearch_Click);
             // 
-            // button4
+            // buttonTag
             // 
-            this.button4.Location = new System.Drawing.Point(12, 364);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(87, 23);
-            this.button4.TabIndex = 10;
-            this.button4.Text = "TAG";
-            this.button4.UseVisualStyleBackColor = true;
+            this.buttonTag.Location = new System.Drawing.Point(187, 129);
+            this.buttonTag.Name = "buttonTag";
+            this.buttonTag.Size = new System.Drawing.Size(100, 23);
+            this.buttonTag.TabIndex = 10;
+            this.buttonTag.Text = "TAG";
+            this.toolTip1.SetToolTip(this.buttonTag, "Flag a Registration Plate for future inspection");
+            this.buttonTag.UseVisualStyleBackColor = true;
+            this.buttonTag.Click += new System.EventHandler(this.buttonTag_Click);
             // 
             // buttonReset
             // 
-            this.buttonReset.Location = new System.Drawing.Point(12, 393);
+            this.buttonReset.Location = new System.Drawing.Point(187, 362);
             this.buttonReset.Name = "buttonReset";
-            this.buttonReset.Size = new System.Drawing.Size(87, 23);
+            this.buttonReset.Size = new System.Drawing.Size(100, 23);
             this.buttonReset.TabIndex = 11;
             this.buttonReset.Text = "RESET";
+            this.toolTip1.SetToolTip(this.buttonReset, "Remove all list");
             this.buttonReset.UseVisualStyleBackColor = true;
             this.buttonReset.Click += new System.EventHandler(this.buttonReset_Click);
             // 
@@ -157,16 +174,34 @@ namespace Lists
             this.singleDataTextBox.Size = new System.Drawing.Size(100, 20);
             this.singleDataTextBox.TabIndex = 12;
             this.singleDataTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.toolTip1.SetToolTip(this.singleDataTextBox, "Selected Registration Plate");
             this.singleDataTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.singleDataTextBox_KeyPress);
+            // 
+            // statusStrip
+            // 
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+            this.statusStrip.Location = new System.Drawing.Point(0, 388);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(299, 22);
+            this.statusStrip.TabIndex = 13;
+            this.statusStrip.Text = "-";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(12, 17);
+            this.toolStripStatusLabel1.Text = "-";
             // 
             // Lists
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(299, 427);
+            this.ClientSize = new System.Drawing.Size(299, 410);
+            this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.singleDataTextBox);
             this.Controls.Add(this.buttonReset);
-            this.Controls.Add(this.button4);
+            this.Controls.Add(this.buttonTag);
             this.Controls.Add(this.buttonLinSearch);
             this.Controls.Add(this.buttonEdit);
             this.Controls.Add(this.saveButton);
@@ -179,8 +214,10 @@ namespace Lists
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Lists";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "List of Colours";
+            this.Text = "Vehicle Registration";
             this.Load += new System.EventHandler(this.Lists_Load);
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -197,9 +234,12 @@ namespace Lists
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Button buttonEdit;
         private System.Windows.Forms.Button buttonLinSearch;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button buttonTag;
         private System.Windows.Forms.Button buttonReset;
         private System.Windows.Forms.TextBox singleDataTextBox;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
     }
 }
 
