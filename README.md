@@ -1,5 +1,6 @@
 # VehicleRegistrationLists
 Users can add, delete, edit, and tag reset registration plates using the software. Additionally, the user can save the data to a text file, which the application can open.
+
 Version: 1.0
 - Add Button: Allows the user to add registration plate to the list by typing them into the text field
 - Delete Button: Allows user to remove the selected registration plate from the list
