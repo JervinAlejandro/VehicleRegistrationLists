@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 // Jervin Alejandro
 // Date 09 November 2021
-// Version 1.2
+// Version 1.1
 // Vehicle Registration
 // Program allows user to add, delete, edit, tag, reset registration plates. Additionally, the program can save the data to a text file
 // Furthermore, the program can also open a text file that contains regstration plates
