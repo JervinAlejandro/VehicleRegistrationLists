@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 // Jervin Alejandro
 // Date 09 November 2021
-// Version 1.0
+// Version 1.1
 // Vehicle Registration
 // Program allows user to add, delete, edit, tag, reset registration plates. Additionally, the program can save the data to a text file
 // Furthermore, the program can also open a text file that contains regstration plates
@@ -64,26 +64,24 @@ namespace Lists
         // PR: Selected data is displayed in the TextBox on the right
         private void listDisplay_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(listDisplay.SelectedIndex > -1 )
-            {
-                singleDataTextBox.Text = listDisplay.SelectedItem.ToString();
-            }  
+
+            // Terinary Operater = Condition ? Statement 1 : Statement 2;
+            var cond = listDisplay.SelectedIndex > -1 ? singleDataTextBox.Text = listDisplay.SelectedItem.ToString() : null;
         }
         // Prevent user from pressing ENTER key
         private void textBoxInput_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if(e.KeyChar == (char)Keys.Enter)
-            {
-                e.Handled = true;
-            }
+            // Terinary Operater = Condition ? Statement 1 : Statement 2;
+            bool cond = e.KeyChar == (char)Keys.Enter ? e.Handled = true : e.Handled = false;
+
         }
         // Prevent user from entering any text or numbers
         private void singleDataTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsDigit(e.KeyChar) || (e.KeyChar == (char)Keys.Enter) || (char.IsDigit(e.KeyChar)))
-            {
-                e.Handled = true;
-            }
+            // Terinary Operater = Condition ? Statement 1 : Statement 2;
+            bool cond = !char.IsDigit(e.KeyChar) || (e.KeyChar == (char)Keys.Enter || (char.IsDigit(e.KeyChar))) 
+                ? e.Handled = true : e.Handled = false;
+
         }
         // Clear textbox and focus cursor in Text box
         private void ccTextBox()
@@ -125,33 +123,30 @@ namespace Lists
             }
             */
 
-           // Temp variable
-           string stmnt;
            // Terinary Operator = Condition ? Statement : Statement;
-           // Check if textbox is not empty and Registration Plate does not exist
-           var checkCond = !string.IsNullOrEmpty(textBoxInput.Text) && !RegoPlate.Contains(textBoxInput.Text) ? stmnt = "1" : stmnt = "2";
-           // If Registration plate exist
-           var checkCond2 = RegoPlate.Contains(textBoxInput.Text) ? stmnt = "3" : null;
-
+           // Condition1: Check if textbox is not empty and Registration Plate does not exist
+           // Condition2: If Registration plate exist
+           int stmnt = !string.IsNullOrEmpty(textBoxInput.Text) && !RegoPlate.Contains(textBoxInput.Text) ? stmnt = 1 
+                : RegoPlate.Contains(textBoxInput.Text) ? stmnt = 2 : stmnt = 3;
            switch (stmnt)
            {
-               case "1":
+               case 1:
                    RegoPlate.Add(textBoxInput.Text);
                    toolStripStatusLabel1.Text = "Add Success";
                    ccTextBox();
                    DisplayList();
                    break;
-               case "2":
-                   MessageBox.Show("Add Fail");
-                   toolStripStatusLabel1.Text = "Text box is empty";
-                   ccTextBox();
-                   break;
-               case "3":
-                   MessageBox.Show("Add Fail");
-                   toolStripStatusLabel1.Text = "Registration Plate already exist";
-                   ccTextBox();
-                   break;
-           }
+               case 2:
+                    MessageBox.Show("Add Fail");
+                    toolStripStatusLabel1.Text = "Registration Plate already exist";
+                    ccTextBox();
+                    break;
+                case 3:
+                    MessageBox.Show("Add Fail");
+                    toolStripStatusLabel1.Text = "Text box is empty";
+                    ccTextBox();
+                    break;
+            }
         }
         // CR: Delete an existing rego plate
         // PR: Two methods to remove registration plate from the list 
@@ -184,30 +179,28 @@ namespace Lists
             }
             */
 
-            // Temp variable
-            string stmnt;
             // Terinary Operator Condition ? Statement : Statement;
-            // Check if textbox is not empty and registration plate exist
-            var checkCond = !string.IsNullOrEmpty(textBoxInput.Text) && RegoPlate.Contains(textBoxInput.Text) ? stmnt = "1" : stmnt = "2";
-            // If registration does not exist
-            var checkCond2 = !string.IsNullOrEmpty(textBoxInput.Text) && !RegoPlate.Contains(textBoxInput.Text) ? stmnt = "3" : null;
+            // Condition1: Check if textbox is not empty and registration plate exist
+            // Condition2: If registration does not exist
+            int stmnt = !string.IsNullOrEmpty(textBoxInput.Text) && RegoPlate.Contains(textBoxInput.Text) ? stmnt = 1 : 
+                !string.IsNullOrEmpty(textBoxInput.Text) && !RegoPlate.Contains(textBoxInput.Text) ? stmnt = 2 : stmnt = 3;
 
             switch (stmnt)
             {
-                case "1":
+                case 1:
                     RegoPlate.Remove(textBoxInput.Text);
                     toolStripStatusLabel1.Text = "Remove Success";
                     ccTextBox();
                     DisplayList();
                     break;
-                case "2":
-                    MessageBox.Show("Remove Fail");
-                    toolStripStatusLabel1.Text = "Text box is empty";
-                    ccTextBox();
-                    break;
-                case "3":
+                case 2:
                     MessageBox.Show("Remove Fail");
                     toolStripStatusLabel1.Text = "Registration Plate does not exist";
+                    ccTextBox();
+                    break;
+                case 3:
+                    MessageBox.Show("Remove Fail");
+                    toolStripStatusLabel1.Text = "Text box is empty";
                     ccTextBox();
                     break;
             }
@@ -220,35 +213,13 @@ namespace Lists
         // Change Registration plate in the list
         private void buttonEdit_Click(object sender, EventArgs e)
         {
-            /*
-            // Check if textbox is not empty and selected an item
-            if (listDisplay.SelectedIndex > -1 && !String.IsNullOrEmpty(textBoxInput.Text))
-            {
-                RegoPlate[listDisplay.SelectedIndex] = textBoxInput.Text;
-                toolStripStatusLabel1.Text = "Edit Success";
-                ccTextBox();
-                DisplayList();
-            }
-            else if (String.IsNullOrEmpty(textBoxInput.Text))
-            {
-                MessageBox.Show("Edit Fail");
-                toolStripStatusLabel1.Text = "Text Box is empty";
-                ccTextBox();
-            }
-            else if (!RegoPlate.Contains(textBoxInput.Text))
-            {
-                MessageBox.Show("Edit Fail");
-                toolStripStatusLabel1.Text = "Registration Plate already exist";
-                ccTextBox();
-            }
-            */
             // Temp variable
             string stmnt;
             // Terinary Operator Condition ? Statement : Statement;
             // Check if text box is not empty and item is selected
             var checkCond = !string.IsNullOrEmpty(textBoxInput.Text) && listDisplay.SelectedIndex > -1 ? stmnt = "1" : stmnt = "2";
-            // If input already exist in the list
-            var checkCond2 = RegoPlate.Contains(textBoxInput.Text) ? stmnt = "3" : null;
+            // If input already exist in the list and if nothing is selected
+            var checkCond2 = RegoPlate.Contains(textBoxInput.Text) ? stmnt = "3" : !string.IsNullOrEmpty(textBoxInput.Text) && listDisplay.SelectedIndex < 0 ? stmnt = "4": null;
 
             switch (stmnt)
             {
@@ -268,7 +239,13 @@ namespace Lists
                     toolStripStatusLabel1.Text = "Registration Plate already exist";
                     ccTextBox();
                     break;
+                case "4":
+                    MessageBox.Show("Edit Fail");
+                    toolStripStatusLabel1.Text = "No Registration Plate is selected";
+                    ccTextBox();
+                    break;
             }
+
         }
         #endregion BUTTONS_1
 
@@ -298,30 +275,29 @@ namespace Lists
                 ccTextBox();
             }
             */
-            // Temp variable
-            string stmnt;
+
             // Terinary Operator = Condition ? Statement : Statement;
-            // Check if item is selected has not yet been tagged
-            var checkCond = listDisplay.SelectedIndex > -1 && !isTagged.Contains(RegoPlate[listDisplay.SelectedIndex]) ? stmnt = "1" : stmnt = "2";
-            // If no item is selected
-            var checkCond2 = listDisplay.SelectedIndex < 0 ? stmnt = "3" : null;
+            // Condition1: Check if item is selected has not yet been tagged
+            // Condition2: If no item is selected
+            int stmnt = listDisplay.SelectedIndex > -1 && !isTagged.Contains(RegoPlate[listDisplay.SelectedIndex]) ? stmnt = 1 
+                : listDisplay.SelectedIndex < 0 ? stmnt = 2: stmnt = 3;
 
             switch (stmnt)
             {
-                case "1":
+                case 1:
                     RegoPlate[listDisplay.SelectedIndex] = "Z " + singleDataTextBox.Text;
                     isTagged.Add(RegoPlate[listDisplay.SelectedIndex]);
                     toolStripStatusLabel1.Text = "Tag Success";
                     DisplayList();
                     break;
-                case "2":
-                    MessageBox.Show("Tag Fail");
-                    toolStripStatusLabel1.Text = "Registration plate already tagged";
-                    ccTextBox();
-                    break;
-                case "3":
+                case 2:
                     MessageBox.Show("Tag Fail");
                     toolStripStatusLabel1.Text = "No Registration Plate is selected";
+                    ccTextBox();
+                    break;
+                case 3:
+                    MessageBox.Show("Tag Fail");
+                    toolStripStatusLabel1.Text = "Registration plate already tagged";
                     ccTextBox();
                     break;
             }
@@ -346,29 +322,26 @@ namespace Lists
             }
             */
 
-            // Temp variable
-            string stmnt;
             // Terinary Operator = Condition ? Statement : Statement;
-            // Check If the registration plate exists. If there is no registration plate, the textbox is empty.
-            var checkCond = RegoPlate.BinarySearch(textBoxInput.Text) >= 0 ? stmnt = "1" : stmnt = "2";
-            // If the textbox is not empty, there is no registration plate.
-            var checkCond2 = !string.IsNullOrEmpty(textBoxInput.Text) ? stmnt = "3" : null;
-
-            switch (stmnt)
+            // Condition1: Check If the registration plate exists. If there is no registration plate, the textbox is empty.
+            // Condition2: If the textbox is not empty, there is no registration plate.
+            int condition = RegoPlate.BinarySearch(textBoxInput.Text) >= 0 ? condition = 1 
+                : !string.IsNullOrEmpty(textBoxInput.Text) ? condition = 2 : condition = 3;
+            switch (condition)
             {
-                case "1":
+                case 1:
                     listDisplay.SelectedItem = textBoxInput.Text;
                     toolStripStatusLabel1.Text = "Search Success";
                     ccTextBox();
                     break;
-                case "2":
-                    MessageBox.Show("Search Fail");
-                    toolStripStatusLabel1.Text = "Text box is empty";
-                    ccTextBox();
-                    break;
-                case "3":
+                case 2:
                     MessageBox.Show("Search Fail");
                     toolStripStatusLabel1.Text = "Registration Plate does not exist";
+                    ccTextBox();
+                    break;
+                case 3:
+                    MessageBox.Show("Search Fail");
+                    toolStripStatusLabel1.Text = "Text box is empty";
                     ccTextBox();
                     break;
             }
@@ -392,29 +365,27 @@ namespace Lists
             }
             */
 
-            // Temp variable
-            string stmnt;
             // Terinary Operator = Condition ? Statement : Statement;
-            // Check If the registration plate exists. If there is no registration plate, the textbox is empty.
-            var checkCond = RegoPlate.Contains(textBoxInput.Text)? stmnt = "1" : stmnt = "2";
-            // If the textbox is not empty, there is no registration plate.
-            var checkCond2 = !string.IsNullOrEmpty(textBoxInput.Text) ? stmnt = "3" : null;
+            // Condition1: Check If the registration plate exists. If there is no registration plate, the textbox is empty.
+            // Condition2: If the textbox is not empty, there is no registration plate.
+            int condition = RegoPlate.Contains(textBoxInput.Text)? condition = 1 
+                : !string.IsNullOrEmpty(textBoxInput.Text) ? condition = 2 : condition = 3;
 
-            switch (stmnt)
+            switch (condition)
             {
-                case "1":
+                case 1:
                     listDisplay.SelectedItem = textBoxInput.Text;
                     toolStripStatusLabel1.Text = "Search Success";
                     ccTextBox();
                     break;
-                case "2":
-                    MessageBox.Show("Search Fail");
-                    toolStripStatusLabel1.Text = "Text box is empty";
-                    ccTextBox();
-                    break;
-                case "3":
+                case 2:
                     MessageBox.Show("Search Fail");
                     toolStripStatusLabel1.Text = "Registration Plate does not exist";
+                    ccTextBox();
+                    break;
+                case 3:
+                    MessageBox.Show("Search Fail");
+                    toolStripStatusLabel1.Text = "Text box is empty";
                     ccTextBox();
                     break;
             }
