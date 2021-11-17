@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -310,8 +310,10 @@ namespace Lists
         {
             string fileName = "demo_nn.txt";
             OpenFileDialog OpenText = new OpenFileDialog();
-            DialogResult sr = OpenText.ShowDialog();
-            if (sr == DialogResult.OK)
+            OpenText.Filter = "Text|*.txt";                 // Open txt files only
+            DialogResult dlg = OpenText.ShowDialog();
+
+            if (dlg == DialogResult.OK)
             {
                 fileName = OpenText.FileName;
                 try
@@ -339,31 +341,36 @@ namespace Lists
         private void saveButton_Click(object sender, EventArgs e)
         {
             string fileName = "demo_##.txt";
-            SaveFileDialog SaveText = new SaveFileDialog();
-            DialogResult sr = SaveText.ShowDialog();
-            if (sr == DialogResult.Cancel)
+            SaveFileDialog SaveText = new SaveFileDialog(); 
+            SaveText.Filter = "Text|*.txt";                 // Save txt files only
+            DialogResult dlg = SaveText.ShowDialog();
+            int cond = dlg == DialogResult.Cancel ? cond = 1 : dlg == DialogResult.OK ? cond = 2: cond = 0;
+
+            switch (cond)
             {
-                SaveText.FileName = fileName;
-            }
-            if (sr == DialogResult.OK)
-            {
-                fileName = SaveText.FileName;
-            }
-            try
-            {
-                using (Stream stream = File.Open(fileName, FileMode.Create))
-                {
-                    BinaryFormatter binaryFormatter = new BinaryFormatter();
-                    foreach (var item in RegoPlate)
+                case 1:
+                    SaveText.FileName = fileName;
+                    break;
+                case 2:
+                    fileName = SaveText.FileName;
+                    try
                     {
-                        binaryFormatter.Serialize(stream, item);
+                        using (Stream stream = File.Open(fileName, FileMode.Create))
+                        {
+                            BinaryFormatter binaryFormatter = new BinaryFormatter();
+                            foreach (var item in RegoPlate)
+                            {
+                                binaryFormatter.Serialize(stream, item);
+                            }
+                        }
                     }
-                }
+                    catch (IOException)
+                    {
+                        MessageBox.Show("Cannot Save File");
+                    }
+                    break;                
             }
-            catch (IOException)
-            {
-                MessageBox.Show("Cannot Save File");
-            }
+
         }
         // CR: Reset button to remove all rego plate data from the List<>
         // PR: RESET button to erase all items from the List<>
