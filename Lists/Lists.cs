@@ -92,7 +92,7 @@ namespace Lists
             textBoxInput.Select();
         }
         #endregion FUNCTIONS
-        
+
         #region BUTTONS_1
         // CR: Add new rego plate
         // PR: User can type data value into the textbox
@@ -100,21 +100,21 @@ namespace Lists
         // PR: Generate error message if textbox is empty
         private void addButton_Click(object sender, EventArgs e)
         {
-
-           // Terinary Operator = Condition ? Statement : Statement;
-           // Condition1: Check if textbox is not empty and Registration Plate does not exist
-           // Condition2: If Registration plate exist
-           int stmnt = !string.IsNullOrEmpty(textBoxInput.Text) && !RegoPlate.Contains(textBoxInput.Text) ? stmnt = 1 
-                : RegoPlate.Contains(textBoxInput.Text) ? stmnt = 2 : stmnt = 3;
-           switch (stmnt)
-           {
-               case 1:
-                   RegoPlate.Add(textBoxInput.Text);
-                   toolStripStatusLabel1.Text = "Add Success";
-                   ccTextBox();
-                   DisplayList();
-                   break;
-               case 2:
+            // Terinary Operator = Condition ? Statement : Statement;
+            // Condition1: Check if textbox is not empty and Registration Plate does not exist
+            // Condition2: If Registration plate exist
+            int stmnt = !string.IsNullOrWhiteSpace(textBoxInput.Text) && !RegoPlate.Contains(textBoxInput.Text) ? stmnt = 1
+                 : RegoPlate.Contains(textBoxInput.Text) ? stmnt = 2 : stmnt = 3;
+           
+            switch (stmnt)
+            {
+                case 1:
+                    RegoPlate.Add(textBoxInput.Text);
+                    toolStripStatusLabel1.Text = "Add Success";
+                    ccTextBox();
+                    DisplayList();
+                    break;
+                case 2:
                     MessageBox.Show("Add Fail");
                     toolStripStatusLabel1.Text = "Registration Plate already exist";
                     ccTextBox();
@@ -125,6 +125,7 @@ namespace Lists
                     ccTextBox();
                     break;
             }
+
         }
         // CR: Delete an existing rego plate
         // PR: Two methods to remove registration plate from the list 
@@ -178,7 +179,7 @@ namespace Lists
             string stmnt;
             // Terinary Operator Condition ? Statement : Statement;
             // Check if text box is not empty and item is selected
-            var checkCond = !string.IsNullOrEmpty(textBoxInput.Text) && listDisplay.SelectedIndex > -1 ? stmnt = "1" : stmnt = "2";
+            var checkCond = !string.IsNullOrWhiteSpace(textBoxInput.Text) && listDisplay.SelectedIndex > -1 ? stmnt = "1" : stmnt = "2";
             // If input already exist in the list and if nothing is selected
             var checkCond2 = RegoPlate.Contains(textBoxInput.Text) ? stmnt = "3" : !string.IsNullOrEmpty(textBoxInput.Text) && listDisplay.SelectedIndex < 0 ? stmnt = "4": null;
 
