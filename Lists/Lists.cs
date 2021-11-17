@@ -17,7 +17,7 @@ using System.Windows.Forms;
 // Version 1.1
 // Vehicle Registration
 // Program allows user to add, delete, edit, tag, reset registration plates. Additionally, the program can save the data to a text file
-// Furthermore, the program can also open a text file that contains regstration plates
+// Furthermore, the program can also open a text file that contains registration plates
 // Registration plates are displayed on the listbox
 
 namespace Lists
@@ -100,28 +100,6 @@ namespace Lists
         // PR: Generate error message if textbox is empty
         private void addButton_Click(object sender, EventArgs e)
         {
-            /*
-            if (!string.IsNullOrEmpty(textBoxInput.Text) && !RegoPlate.Contains(textBoxInput.Text))
-            {
-                RegoPlate.Add(textBoxInput.Text);
-                toolStripStatusLabel1.Text = "-";
-                ccTextBox();
-                DisplayList();
-            }
-            else if (RegoPlate.Contains(textBoxInput.Text))
-            {
-                MessageBox.Show("Add Fail");
-                toolStripStatusLabel1.Text = "Registration Plate already exist";
-                ccTextBox();
-                
-            }
-            else
-            {
-                MessageBox.Show("Add Fail");
-                toolStripStatusLabel1.Text = "Text Box is empty";
-                ccTextBox();
-            }
-            */
 
            // Terinary Operator = Condition ? Statement : Statement;
            // Condition1: Check if textbox is not empty and Registration Plate does not exist
@@ -162,23 +140,6 @@ namespace Lists
         // PR: Remove by entering the rego plate information into the TextBox
         private void deleteButton_Click(object sender, EventArgs e)
         {
-            /*
-            // Check if textbox is not empty and regoplate exist
-            if (!String.IsNullOrEmpty(textBoxInput.Text) && RegoPlate.Contains(textBoxInput.Text))
-            {
-                RegoPlate.Remove(textBoxInput.Text);
-                toolStripStatusLabel1.Text = "Remove Success";
-                ccTextBox();
-                DisplayList();
-            }
-            else
-            {
-                MessageBox.Show("Remove Fail");
-                toolStripStatusLabel1.Text = "Registration Plate does not exist";
-                ccTextBox();
-            }
-            */
-
             // Terinary Operator Condition ? Statement : Statement;
             // Condition1: Check if textbox is not empty and registration plate exist
             // Condition2: If registration does not exist
@@ -254,28 +215,6 @@ namespace Lists
         // PR: Add "z" before the rego plate to mark a rego plate
         private void buttonTag_Click(object sender, EventArgs e)
         {
-            /*
-            if (listDisplay.SelectedIndex > -1 && !isTagged.Contains(RegoPlate[listDisplay.SelectedIndex]))
-            {
-                RegoPlate[listDisplay.SelectedIndex] = "z " + singleDataTextBox.Text;
-                isTagged.Add(RegoPlate[listDisplay.SelectedIndex]);
-                toolStripStatusLabel1.Text = "Tag Success";
-                DisplayList();
-            }
-            else if (listDisplay.SelectedIndex > -1 && isTagged.Contains(RegoPlate[listDisplay.SelectedIndex]))
-            {
-                MessageBox.Show("Tag Fail");
-                toolStripStatusLabel1.Text = "Registration plate already Tagged";
-                ccTextBox();
-            }
-            else
-            {
-                MessageBox.Show("Tag Fail");
-                toolStripStatusLabel1.Text = "No Registration plate is selected";
-                ccTextBox();
-            }
-            */
-
             // Terinary Operator = Condition ? Statement : Statement;
             // Condition1: Check if item is selected has not yet been tagged
             // Condition2: If no item is selected
@@ -307,21 +246,6 @@ namespace Lists
         // PR: Locate a particular registration plate using a binary search algorithm
         private void searchButton_Click(object sender, EventArgs e)
         {
-            /*
-            DisplayList()
-            if (RegoPlate.BinarySearch(textBoxInput.Text) >= 0) // >= 0 is a comparator
-            {
-                listDisplay.SelectedItem = textBoxInput.Text;
-                MessageBox.Show("Found");
-                textBoxInput.Clear();
-            }
-            else
-            {
-                MessageBox.Show("Search Fail");
-                ccTextBox();
-            }
-            */
-
             // Terinary Operator = Condition ? Statement : Statement;
             // Condition1: Check If the registration plate exists. If there is no registration plate, the textbox is empty.
             // Condition2: If the textbox is not empty, there is no registration plate.
@@ -351,20 +275,6 @@ namespace Lists
         // PR: Locate a particular registration plate using a linear search algorithm
         private void buttonLinSearch_Click(object sender, EventArgs e)
         {
-            /*
-            if(RegoPlate.Contains(textBoxInput.Text))
-            {
-                listDisplay.SelectedItem = textBoxInput.Text;
-                MessageBox.Show("Found");
-                textBoxInput.Clear();
-            }
-            else
-            {
-                MessageBox.Show("Not Found");
-                ccTextBox();
-            }
-            */
-
             // Terinary Operator = Condition ? Statement : Statement;
             // Condition1: Check If the registration plate exists. If there is no registration plate, the textbox is empty.
             // Condition2: If the textbox is not empty, there is no registration plate.
