@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,6 +9,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
+
 // CR = Client Requirement
 // PR = Program Requirement
 
@@ -91,6 +93,8 @@ namespace Lists
             textBoxInput.Clear();
             textBoxInput.Select();
         }
+
+
         #endregion FUNCTIONS
 
         #region BUTTONS_1
@@ -100,16 +104,17 @@ namespace Lists
         // PR: Generate error message if textbox is empty
         private void addButton_Click(object sender, EventArgs e)
         {
+
             // Terinary Operator = Condition ? Statement : Statement;
             // Condition1: Check if textbox is not empty and Registration Plate does not exist
             // Condition2: If Registration plate exist
             int stmnt = !string.IsNullOrWhiteSpace(textBoxInput.Text) && !RegoPlate.Contains(textBoxInput.Text) ? stmnt = 1
                  : RegoPlate.Contains(textBoxInput.Text) ? stmnt = 2 : stmnt = 3;
-           
+
             switch (stmnt)
             {
                 case 1:
-                    RegoPlate.Add(textBoxInput.Text);
+                    RegoPlate.Add(textBoxInput.Text.ToUpper()); ;
                     toolStripStatusLabel1.Text = "Add Success";
                     ccTextBox();
                     DisplayList();
@@ -186,7 +191,7 @@ namespace Lists
             switch (stmnt)
             {
                 case "1":
-                    RegoPlate[listDisplay.SelectedIndex] = textBoxInput.Text;
+                    RegoPlate[listDisplay.SelectedIndex] = textBoxInput.Text.ToUpper();
                     toolStripStatusLabel1.Text = "Edit Success";
                     ccTextBox();
                     DisplayList();
