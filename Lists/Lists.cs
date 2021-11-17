@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -314,67 +314,74 @@ namespace Lists
         #region BUTTONS_3
         private void openButton_Click(object sender, EventArgs e)
         {
-            string fileName = "demo_nn.txt";
-            OpenFileDialog OpenText = new OpenFileDialog();
+            string fileName = "demo_##.txt";                // File to open
+            OpenFileDialog OpenText = new OpenFileDialog(); // Dialogbox instance to open a file
             OpenText.Filter = "Text|*.txt";                 // Open txt files only
-            DialogResult dlg = OpenText.ShowDialog();
+            DialogResult dlg = OpenText.ShowDialog();       // set dialog result
+            // terinary operator = condition ? statement 1: statement 2:
+            int cond = dlg == DialogResult.OK ? cond = 1 : cond = 0;
 
-            if (dlg == DialogResult.OK)
+            switch (cond)
             {
-                fileName = OpenText.FileName;
-                try
-                {
-                    RegoPlate.Clear();
-                    using (Stream stream = File.Open(fileName, FileMode.Open))
+                case 1:
+                    try
                     {
-                        BinaryFormatter binaryFormatter = new BinaryFormatter();
-                        while (stream.Position < stream.Length)
+                        fileName = OpenText.FileName;           // Get selected text file and store to filename
+                        RegoPlate.Clear();
+
+                        using (Stream stream = File.Open(fileName, FileMode.Open))
                         {
-                            RegoPlate.Add((string)binaryFormatter.Deserialize(stream));
+                            BinaryFormatter binaryFormatter = new BinaryFormatter();            // Instance of binaryformatter to serialize or deserialize
+                            while (stream.Position < stream.Length)
+                            {
+                                RegoPlate.Add((string)binaryFormatter.Deserialize(stream));     // Converters 1s and 0s back to original
+                            }
                         }
+                        DisplayList();
                     }
-                    DisplayList();
-                }
-                catch (IOException)
-                {
-                    MessageBox.Show("Cannot Open File");
-                }
+                    catch (IOException)
+                    {
+                        MessageBox.Show("Cannot Open File");                                    // Error trapping
+                    }
+                    break;
             }
-            
+
         }
         // CR: Open Text File and Load data
         // PR: User can select different data from pre-saved files
         private void saveButton_Click(object sender, EventArgs e)
         {
-            string fileName = "demo_##.txt";
-            SaveFileDialog SaveText = new SaveFileDialog(); 
+            string fileName = "demo_##.txt";                // File name to save
+            SaveFileDialog SaveText = new SaveFileDialog(); // Dialogbox instance to save a file
             SaveText.Filter = "Text|*.txt";                 // Save txt files only
-            DialogResult dlg = SaveText.ShowDialog();
+            DialogResult dlg = SaveText.ShowDialog();       // set dialog result
+            // terinary operator = condition ? statement 1: statement 2:
             int cond = dlg == DialogResult.Cancel ? cond = 1 : dlg == DialogResult.OK ? cond = 2: cond = 0;
 
             switch (cond)
             {
                 case 1:
-                    SaveText.FileName = fileName;
+                    SaveText.FileName = fileName;                                        
                     break;
                 case 2:
-                    fileName = SaveText.FileName;
+                    fileName = SaveText.FileName;                                       // Set text file and store to fileName
                     try
                     {
                         using (Stream stream = File.Open(fileName, FileMode.Create))
                         {
-                            BinaryFormatter binaryFormatter = new BinaryFormatter();
+                            BinaryFormatter binaryF = new BinaryFormatter();            // Instance of binaryformatter to serialize or deserialize
                             foreach (var item in RegoPlate)
                             {
-                                binaryFormatter.Serialize(stream, item);
+                                binaryF.Serialize(stream, item);                        // Converters stream to 1s and 0s
                             }
                         }
                     }
                     catch (IOException)
                     {
-                        MessageBox.Show("Cannot Save File");
+                        MessageBox.Show("Cannot Save File");                            // Error trapping
                     }
-                    break;                
+                    break;
+
             }
 
         }
