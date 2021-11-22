@@ -33,7 +33,8 @@ namespace Lists
         // PR: The prototype must use a List<> data structure of data type “string”.
         List<string> RegoPlate = new List<string>();
         // Temp list to check if Registration Plates are already tagged
-        List<string> isTagged = new List<string>();
+        List<string> tagged = new List<string>();
+        
 
         #region FUNCTIONS
         // PR: Display all added/removed/edited items from the list
@@ -50,23 +51,48 @@ namespace Lists
         // Load demo_##.txt file by default
         private void Lists_Load(object sender, EventArgs e)
         {
-            string fileName = "demo_##.txt";
 
+            string fileName = "demo_##.txt";                                // File to open
             using (Stream openFile = File.Open(fileName, FileMode.Open))
             {
                 BinaryFormatter binFormat = new BinaryFormatter();
                 while (openFile.Position < openFile.Length)
                 {
-                    RegoPlate.Add((string)binFormat.Deserialize(openFile));
+                    RegoPlate.Add((string)binFormat.Deserialize(openFile)); // Converters 1s and 0s back to original
                 }
             }
-            DisplayList();
 
+            DisplayList();
+            toolStripStatusLabel1.Text = "Default text file successfully loaded";
+
+        }
+        // Auto save file when closed
+        private void Lists_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Temp counter
+            int fileNameCounter = 1;
+            // Default file name with counter
+            string fileName = "demo_"+ fileNameCounter +".txt";
+            // If file already exist, add one to counter
+            while (File.Exists(fileName))
+            {
+                fileNameCounter++;
+                fileName = "demo_" + fileNameCounter + ".txt";
+            }
+            // Get every line of text from the list and save to filename
+            using (Stream stream = File.Open(fileName, FileMode.Create))    // Stream allows reading and writing bytes
+            {
+                BinaryFormatter binaryF = new BinaryFormatter();            // Instance of binaryformatter to serialize or deserialize
+                foreach (var text in RegoPlate)                             
+                {                                                           
+                    binaryF.Serialize(stream, text);                        // Converters stream to 1s and 0s
+                }
+            }
+            toolStripStatusLabel1.Text = "Save Success";
         }
         // PR: Selected data is displayed in the TextBox on the right
         private void listDisplay_SelectedIndexChanged(object sender, EventArgs e)
         {
-
             // Terinary Operater = Condition ? Statement 1 : Statement 2;
             var cond = listDisplay.SelectedIndex > -1 ? singleDataTextBox.Text = listDisplay.SelectedItem.ToString() : null;
         }
@@ -94,7 +120,6 @@ namespace Lists
             textBoxInput.Select();
         }
 
-
         #endregion FUNCTIONS
 
         #region BUTTONS_1
@@ -110,6 +135,15 @@ namespace Lists
             // Condition2: If Registration plate exist
             int stmnt = !string.IsNullOrWhiteSpace(textBoxInput.Text) && !RegoPlate.Contains(textBoxInput.Text) ? stmnt = 1
                  : RegoPlate.Contains(textBoxInput.Text) ? stmnt = 2 : stmnt = 3;
+            // Prevent invalid registration plate 
+            // N = Number
+            // L = Letter
+            // Standard WA rego plate format is NLLLNNN
+            if (!string.IsNullOrWhiteSpace(textBoxInput.Text) && (!char.IsDigit(textBoxInput.Text[0]) || !char.IsLetter(textBoxInput.Text[1]) || !char.IsLetter(textBoxInput.Text[2]) || !char.IsLetter(textBoxInput.Text[3]) 
+                || !char.IsDigit(textBoxInput.Text[4]) || !char.IsDigit(textBoxInput.Text[5]) || !char.IsDigit(textBoxInput.Text[6])))
+            {
+                stmnt = 4;
+            }
 
             switch (stmnt)
             {
@@ -127,6 +161,11 @@ namespace Lists
                 case 3:
                     MessageBox.Show("Add Fail");
                     toolStripStatusLabel1.Text = "Text box is empty";
+                    ccTextBox();
+                    break;
+                case 4:
+                    MessageBox.Show("Add Fail");
+                    toolStripStatusLabel1.Text = "Registration Plate is not valid";
                     ccTextBox();
                     break;
             }
@@ -149,8 +188,8 @@ namespace Lists
             // Terinary Operator Condition ? Statement : Statement;
             // Condition1: Check if textbox is not empty and registration plate exist
             // Condition2: If registration does not exist
-            int stmnt = !string.IsNullOrEmpty(textBoxInput.Text) && RegoPlate.Contains(textBoxInput.Text) ? stmnt = 1 : 
-                !string.IsNullOrEmpty(textBoxInput.Text) && !RegoPlate.Contains(textBoxInput.Text) ? stmnt = 2 : stmnt = 3;
+            int stmnt = !string.IsNullOrWhiteSpace(textBoxInput.Text) && RegoPlate.Contains(textBoxInput.Text) ? stmnt = 1 : 
+                !string.IsNullOrWhiteSpace(textBoxInput.Text) && !RegoPlate.Contains(textBoxInput.Text) ? stmnt = 2 : stmnt = 3;
 
             switch (stmnt)
             {
@@ -186,7 +225,7 @@ namespace Lists
             // Check if text box is not empty and item is selected
             var checkCond = !string.IsNullOrWhiteSpace(textBoxInput.Text) && listDisplay.SelectedIndex > -1 ? stmnt = "1" : stmnt = "2";
             // If input already exist in the list and if nothing is selected
-            var checkCond2 = RegoPlate.Contains(textBoxInput.Text) ? stmnt = "3" : !string.IsNullOrEmpty(textBoxInput.Text) && listDisplay.SelectedIndex < 0 ? stmnt = "4": null;
+            var checkCond2 = RegoPlate.Contains(textBoxInput.Text) ? stmnt = "3" : !string.IsNullOrWhiteSpace(textBoxInput.Text) && listDisplay.SelectedIndex < 0 ? stmnt = "4": null;
 
             switch (stmnt)
             {
@@ -224,14 +263,14 @@ namespace Lists
             // Terinary Operator = Condition ? Statement : Statement;
             // Condition1: Check if item is selected has not yet been tagged
             // Condition2: If no item is selected
-            int stmnt = listDisplay.SelectedIndex > -1 && !isTagged.Contains(RegoPlate[listDisplay.SelectedIndex]) ? stmnt = 1 
+            int stmnt = listDisplay.SelectedIndex > -1 && !tagged.Contains(RegoPlate[listDisplay.SelectedIndex]) ? stmnt = 1 
                 : listDisplay.SelectedIndex < 0 ? stmnt = 2: stmnt = 3;
 
             switch (stmnt)
             {
                 case 1:
                     RegoPlate[listDisplay.SelectedIndex] = "Z " + singleDataTextBox.Text;
-                    isTagged.Add(RegoPlate[listDisplay.SelectedIndex]);
+                    tagged.Add(RegoPlate[listDisplay.SelectedIndex]);
                     toolStripStatusLabel1.Text = "Tag Success";
                     DisplayList();
                     break;
@@ -240,10 +279,19 @@ namespace Lists
                     toolStripStatusLabel1.Text = "No Registration Plate is selected";
                     ccTextBox();
                     break;
+                //case 3:
+                //    MessageBox.Show("Tag Fail");
+                //    toolStripStatusLabel1.Text = "Registration plate already tagged";
+                //    ccTextBox();
+                //    break;
+
+                // Untag a registration plate
                 case 3:
-                    MessageBox.Show("Tag Fail");
-                    toolStripStatusLabel1.Text = "Registration plate already tagged";
-                    ccTextBox();
+                    tagged.Remove(RegoPlate[listDisplay.SelectedIndex]);
+                    singleDataTextBox.Text = singleDataTextBox.Text.Remove(0, 2);
+                    RegoPlate[listDisplay.SelectedIndex] = singleDataTextBox.Text;
+                    toolStripStatusLabel1.Text = "Registration plate untagged";
+                    DisplayList();
                     break;
             }
 
@@ -256,7 +304,7 @@ namespace Lists
             // Condition1: Check If the registration plate exists. If there is no registration plate, the textbox is empty.
             // Condition2: If the textbox is not empty, there is no registration plate.
             int condition = RegoPlate.BinarySearch(textBoxInput.Text) >= 0 ? condition = 1 
-                : !string.IsNullOrEmpty(textBoxInput.Text) ? condition = 2 : condition = 3;
+                : !string.IsNullOrWhiteSpace(textBoxInput.Text) ? condition = 2 : condition = 3;
             switch (condition)
             {
                 case 1:
@@ -281,29 +329,39 @@ namespace Lists
         // PR: Locate a particular registration plate using a linear search algorithm
         private void buttonLinSearch_Click(object sender, EventArgs e)
         {
-            // Terinary Operator = Condition ? Statement : Statement;
-            // Condition1: Check If the registration plate exists. If there is no registration plate, the textbox is empty.
-            // Condition2: If the textbox is not empty, there is no registration plate.
-            int condition = RegoPlate.Contains(textBoxInput.Text)? condition = 1 
-                : !string.IsNullOrEmpty(textBoxInput.Text) ? condition = 2 : condition = 3;
-
-            switch (condition)
+            
+            bool found = false;
+            // Loop till input text is found
+            for (int i = 0; i < RegoPlate.Count; i++)
             {
-                case 1:
-                    listDisplay.SelectedItem = textBoxInput.Text;
-                    toolStripStatusLabel1.Text = "Search Success";
-                    ccTextBox();
+                if (textBoxInput.Text == RegoPlate[i])
+                {
+                    found = true;
                     break;
-                case 2:
-                    MessageBox.Show("Search Fail");
-                    toolStripStatusLabel1.Text = "Registration Plate does not exist";
-                    ccTextBox();
-                    break;
-                case 3:
-                    MessageBox.Show("Search Fail");
-                    toolStripStatusLabel1.Text = "Text box is empty";
-                    ccTextBox();
-                    break;
+                }
+
+            }
+            // If input text is found
+            if (found == true)
+            {
+                listDisplay.SelectedItem = textBoxInput.Text;
+                toolStripStatusLabel1.Text = "Search Success";
+                ccTextBox();
+
+            // If input is not empty it must be registration must not exist
+            }
+            else if(!string.IsNullOrWhiteSpace(textBoxInput.Text))
+            {
+                MessageBox.Show("Search Fail");
+                toolStripStatusLabel1.Text = "Registration Plate does not exist";
+                ccTextBox();
+            // If none of the if statements are true then text box must be empty
+            }
+            else
+            {
+                MessageBox.Show("Search Fail");
+                toolStripStatusLabel1.Text = "Text box is empty"; 
+                ccTextBox();
             }
 
         }
@@ -319,17 +377,16 @@ namespace Lists
             OpenText.Filter = "Text|*.txt";                 // Open txt files only
             DialogResult dlg = OpenText.ShowDialog();       // set dialog result
             // terinary operator = condition ? statement 1: statement 2:
-            int cond = dlg == DialogResult.OK ? cond = 1 : cond = 0;
-
+            int cond = dlg == DialogResult.OK ? cond = 1 : dlg == DialogResult.Cancel ? cond = 2 : cond = 0;
             switch (cond)
             {
                 case 1:
                     try
                     {
-                        fileName = OpenText.FileName;           // Get selected text file and store to filename
+                        fileName = OpenText.FileName;           // Get selected text file name and store to filename
                         RegoPlate.Clear();
 
-                        using (Stream stream = File.Open(fileName, FileMode.Open))
+                        using (Stream stream = File.Open(fileName, FileMode.Open))              // Stream allows reading and writing bytes
                         {
                             BinaryFormatter binaryFormatter = new BinaryFormatter();            // Instance of binaryformatter to serialize or deserialize
                             while (stream.Position < stream.Length)
@@ -338,14 +395,17 @@ namespace Lists
                             }
                         }
                         DisplayList();
+                        toolStripStatusLabel1.Text = "Load Success";
                     }
                     catch (IOException)
                     {
-                        MessageBox.Show("Cannot Open File");                                    // Error trapping
+                        MessageBox.Show("Cannot Open File");                                  // Error trapping
                     }
                     break;
+                case 2:
+                    toolStripStatusLabel1.Text = "Load Cancelled";
+                    break;
             }
-
         }
         // CR: Open Text File and Load data
         // PR: User can select different data from pre-saved files
@@ -361,41 +421,57 @@ namespace Lists
             switch (cond)
             {
                 case 1:
-                    SaveText.FileName = fileName;                                        
+                    SaveText.FileName = fileName;
+                    toolStripStatusLabel1.Text = "Save Cancelled";
                     break;
                 case 2:
                     fileName = SaveText.FileName;                                       // Set text file and store to fileName
                     try
                     {
-                        using (Stream stream = File.Open(fileName, FileMode.Create))
+                        // Get every line of text from the list and save to filename
+                        using (Stream stream = File.Open(fileName, FileMode.Create))    // Stream allows reading and writing bytes
                         {
                             BinaryFormatter binaryF = new BinaryFormatter();            // Instance of binaryformatter to serialize or deserialize
-                            foreach (var item in RegoPlate)
+                            foreach (var text in RegoPlate)
                             {
-                                binaryF.Serialize(stream, item);                        // Converters stream to 1s and 0s
+                                binaryF.Serialize(stream, text);                        // Converters stream to 1s and 0s
                             }
                         }
+                        toolStripStatusLabel1.Text = "Save Success";
                     }
                     catch (IOException)
                     {
                         MessageBox.Show("Cannot Save File");                            // Error trapping
                     }
                     break;
-
             }
-
         }
         // CR: Reset button to remove all rego plate data from the List<>
         // PR: RESET button to erase all items from the List<>
         // PR: Clear ListBox, Textbox and RegoPlate<> when button is pressed
         private void buttonReset_Click(object sender, EventArgs e)
         {
-            RegoPlate.Clear();
-            textBoxInput.Clear();
-            singleDataTextBox.Clear();
-            DisplayList();
+            // Show message when resetting
+            DialogResult dlg = MessageBox.Show("Are you sure you want to RESET your data?", "Confirm Reset", MessageBoxButtons.OKCancel);
+            switch (dlg)
+            {
+                case DialogResult.OK:
+                    RegoPlate.Clear();
+                    textBoxInput.Clear();
+                    singleDataTextBox.Clear();
+                    DisplayList();
+                    toolStripStatusLabel1.Text = "Reset Success";
+                    break;
+                case DialogResult.Cancel:
+                    toolStripStatusLabel1.Text = "Reset Cancelled";
+                    break;
+            }
+
+            
+
         }
         #endregion BUTTONS_3
+
 
     }
 }
