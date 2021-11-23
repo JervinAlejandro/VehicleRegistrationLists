@@ -1,6 +1,9 @@
 # VehicleRegistrationLists
 Users can add, delete, edit, and tag reset registration plates using the software. Additionally, the user can save the data to a text file, which the application can open.
 
+Version 1.2
+- Fixed Bugs and Errors
+
 Version: 1.1
 - Fixed Edit Button
 
