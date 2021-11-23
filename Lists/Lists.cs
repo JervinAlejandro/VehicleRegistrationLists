@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -457,6 +457,7 @@ namespace Lists
             DialogResult dlg = MessageBox.Show("Are you sure you want to RESET your data?", "Confirm Reset", MessageBoxButtons.OKCancel);
             switch (dlg)
             {
+                // Clear Everything
                 case DialogResult.OK:
                     RegoPlate.Clear();
                     textBoxInput.Clear();
@@ -469,11 +470,8 @@ namespace Lists
                     break;
             }
 
-            
-
         }
-        #endregion BUTTONS_3
-
+        #endregion 
 
     }
 }

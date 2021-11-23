@@ -30,6 +30,7 @@ namespace Lists
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Lists));
             this.listDisplay = new System.Windows.Forms.ListBox();
             this.textBoxInput = new System.Windows.Forms.TextBox();
             this.addButton = new System.Windows.Forms.Button();
@@ -65,7 +66,8 @@ namespace Lists
             this.textBoxInput.Name = "textBoxInput";
             this.textBoxInput.Size = new System.Drawing.Size(275, 20);
             this.textBoxInput.TabIndex = 1;
-            this.toolTip1.SetToolTip(this.textBoxInput, "Enter Registration Plate");
+            this.toolTip1.SetToolTip(this.textBoxInput, "Enter Registration Plate(one number, three letters, three numbers(Standard WA reg" +
+        "o plate format))");
             this.textBoxInput.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxInput_KeyPress);
             // 
             // addButton
@@ -163,7 +165,7 @@ namespace Lists
             this.buttonReset.Size = new System.Drawing.Size(100, 23);
             this.buttonReset.TabIndex = 11;
             this.buttonReset.Text = "RESET";
-            this.toolTip1.SetToolTip(this.buttonReset, "Remove all list");
+            this.toolTip1.SetToolTip(this.buttonReset, "Remove all registration plate in the list");
             this.buttonReset.UseVisualStyleBackColor = true;
             this.buttonReset.Click += new System.EventHandler(this.buttonReset_Click);
             // 
@@ -174,7 +176,7 @@ namespace Lists
             this.singleDataTextBox.Size = new System.Drawing.Size(100, 20);
             this.singleDataTextBox.TabIndex = 12;
             this.singleDataTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.toolTip1.SetToolTip(this.singleDataTextBox, "Selected Registration Plate");
+            this.toolTip1.SetToolTip(this.singleDataTextBox, "Display Registration Plate");
             this.singleDataTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.singleDataTextBox_KeyPress);
             // 
             // statusStrip
@@ -212,6 +214,7 @@ namespace Lists
             this.Controls.Add(this.textBoxInput);
             this.Controls.Add(this.listDisplay);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Lists";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Vehicle Registration";
