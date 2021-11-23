@@ -11,12 +11,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 
+
 // CR = Client Requirement
 // PR = Program Requirement
 
 // Jervin Alejandro
 // Date 09 November 2021
-// Version 1.1
+// Version 1.2
 // Vehicle Registration
 // Program allows user to add, delete, edit, tag, reset registration plates. Additionally, the program can save the data to a text file
 // Furthermore, the program can also open a text file that contains registration plates
@@ -69,26 +70,7 @@ namespace Lists
         // Auto save file when closed
         private void Lists_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // Temp counter
-            int fileNameCounter = 1;
-            // Default file name with counter
-            string fileName = "demo_"+ fileNameCounter +".txt";
-            // If file already exist, add one to counter
-            while (File.Exists(fileName))
-            {
-                fileNameCounter++;
-                fileName = "demo_" + fileNameCounter + ".txt";
-            }
-            // Get every line of text from the list and save to filename
-            using (Stream stream = File.Open(fileName, FileMode.Create))    // Stream allows reading and writing bytes
-            {
-                BinaryFormatter binaryF = new BinaryFormatter();            // Instance of binaryformatter to serialize or deserialize
-                foreach (var text in RegoPlate)                             
-                {                                                           
-                    binaryF.Serialize(stream, text);                        // Converters stream to 1s and 0s
-                }
-            }
-            toolStripStatusLabel1.Text = "Save Success";
+
         }
         // PR: Selected data is displayed in the TextBox on the right
         private void listDisplay_SelectedIndexChanged(object sender, EventArgs e)
@@ -154,18 +136,18 @@ namespace Lists
                     DisplayList();
                     break;
                 case 2:
-                    MessageBox.Show("Add Fail");
                     toolStripStatusLabel1.Text = "Registration Plate already exist";
+                    MessageBox.Show("Add Fail");
                     ccTextBox();
                     break;
                 case 3:
-                    MessageBox.Show("Add Fail");
                     toolStripStatusLabel1.Text = "Text box is empty";
+                    MessageBox.Show("Add Fail");
                     ccTextBox();
                     break;
                 case 4:
-                    MessageBox.Show("Add Fail");
                     toolStripStatusLabel1.Text = "Registration Plate is not valid";
+                    MessageBox.Show("Add Fail");
                     ccTextBox();
                     break;
             }
@@ -177,10 +159,13 @@ namespace Lists
         // PR: Remove by double clicking data item from the ListBox
         private void listDisplay_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            toolStripStatusLabel1.Text = "Remove Success";
-            RegoPlate.Remove(singleDataTextBox.Text);
-            singleDataTextBox.Clear();
-            DisplayList();
+            if(listDisplay.SelectedIndex > -1)
+            {
+                toolStripStatusLabel1.Text = "Remove Success";
+                RegoPlate.Remove(singleDataTextBox.Text);
+                singleDataTextBox.Clear();
+                DisplayList();
+            }
         }
         // PR: Remove by entering the rego plate information into the TextBox
         private void deleteButton_Click(object sender, EventArgs e)
@@ -200,13 +185,13 @@ namespace Lists
                     DisplayList();
                     break;
                 case 2:
-                    MessageBox.Show("Remove Fail");
                     toolStripStatusLabel1.Text = "Registration Plate does not exist";
+                    MessageBox.Show("Remove Fail");
                     ccTextBox();
                     break;
                 case 3:
-                    MessageBox.Show("Remove Fail");
                     toolStripStatusLabel1.Text = "Text box is empty";
+                    MessageBox.Show("Remove Fail");
                     ccTextBox();
                     break;
             }
@@ -227,6 +212,12 @@ namespace Lists
             // If input already exist in the list and if nothing is selected
             var checkCond2 = RegoPlate.Contains(textBoxInput.Text) ? stmnt = "3" : !string.IsNullOrWhiteSpace(textBoxInput.Text) && listDisplay.SelectedIndex < 0 ? stmnt = "4": null;
 
+            if (!string.IsNullOrWhiteSpace(textBoxInput.Text) && (!char.IsDigit(textBoxInput.Text[0]) || !char.IsLetter(textBoxInput.Text[1]) || !char.IsLetter(textBoxInput.Text[2]) || !char.IsLetter(textBoxInput.Text[3]) 
+                || !char.IsDigit(textBoxInput.Text[4]) || !char.IsDigit(textBoxInput.Text[5]) || !char.IsDigit(textBoxInput.Text[6])))
+            {
+                stmnt = "5";
+            }
+
             switch (stmnt)
             {
                 case "1":
@@ -236,18 +227,23 @@ namespace Lists
                     DisplayList();
                     break;
                 case "2":
-                    MessageBox.Show("Edit Fail");
                     toolStripStatusLabel1.Text = "Text box is empty";
+                    MessageBox.Show("Edit Fail");
                     ccTextBox();
                     break;
                 case "3":
-                    MessageBox.Show("Edit Fail");
                     toolStripStatusLabel1.Text = "Registration Plate already exist";
+                    MessageBox.Show("Edit Fail");
                     ccTextBox();
                     break;
                 case "4":
-                    MessageBox.Show("Edit Fail");
                     toolStripStatusLabel1.Text = "No Registration Plate is selected";
+                    MessageBox.Show("Edit Fail");
+                    ccTextBox();
+                    break;
+                case "5":
+                    toolStripStatusLabel1.Text = "Registration Plate is not valid";
+                    MessageBox.Show("Edit Fail");
                     ccTextBox();
                     break;
             }
@@ -272,11 +268,12 @@ namespace Lists
                     RegoPlate[listDisplay.SelectedIndex] = "Z " + singleDataTextBox.Text;
                     tagged.Add(RegoPlate[listDisplay.SelectedIndex]);
                     toolStripStatusLabel1.Text = "Tag Success";
+                    singleDataTextBox.Clear();
                     DisplayList();
                     break;
                 case 2:
-                    MessageBox.Show("Tag Fail");
                     toolStripStatusLabel1.Text = "No Registration Plate is selected";
+                    MessageBox.Show("Tag Fail");
                     ccTextBox();
                     break;
                 //case 3:
@@ -291,6 +288,7 @@ namespace Lists
                     singleDataTextBox.Text = singleDataTextBox.Text.Remove(0, 2);
                     RegoPlate[listDisplay.SelectedIndex] = singleDataTextBox.Text;
                     toolStripStatusLabel1.Text = "Registration plate untagged";
+                    singleDataTextBox.Clear();
                     DisplayList();
                     break;
             }
@@ -313,13 +311,13 @@ namespace Lists
                     ccTextBox();
                     break;
                 case 2:
-                    MessageBox.Show("Search Fail");
                     toolStripStatusLabel1.Text = "Registration Plate does not exist";
+                    MessageBox.Show("Search Fail");
                     ccTextBox();
                     break;
                 case 3:
-                    MessageBox.Show("Search Fail");
                     toolStripStatusLabel1.Text = "Text box is empty";
+                    MessageBox.Show("Search Fail");
                     ccTextBox();
                     break;
             }
@@ -352,15 +350,15 @@ namespace Lists
             }
             else if(!string.IsNullOrWhiteSpace(textBoxInput.Text))
             {
-                MessageBox.Show("Search Fail");
                 toolStripStatusLabel1.Text = "Registration Plate does not exist";
+                MessageBox.Show("Search Fail");
                 ccTextBox();
             // If none of the if statements are true then text box must be empty
             }
             else
             {
+                toolStripStatusLabel1.Text = "Text box is empty";
                 MessageBox.Show("Search Fail");
-                toolStripStatusLabel1.Text = "Text box is empty"; 
                 ccTextBox();
             }
 
@@ -394,12 +392,15 @@ namespace Lists
                                 RegoPlate.Add((string)binaryFormatter.Deserialize(stream));     // Converters 1s and 0s back to original
                             }
                         }
+                        singleDataTextBox.Clear();
                         DisplayList();
                         toolStripStatusLabel1.Text = "Load Success";
                     }
-                    catch (IOException)
+                    // Error trapping
+                    catch (Exception)
                     {
-                        MessageBox.Show("Cannot Open File");                                  // Error trapping
+                        toolStripStatusLabel1.Text = "Text File did not come from the program";
+                        MessageBox.Show("Cannot Open File");                                  
                     }
                     break;
                 case 2:
@@ -414,6 +415,7 @@ namespace Lists
             string fileName = "demo_##.txt";                // File name to save
             SaveFileDialog SaveText = new SaveFileDialog(); // Dialogbox instance to save a file
             SaveText.Filter = "Text|*.txt";                 // Save txt files only
+            SaveText.FileName = "demo_##.txt";              // Default file name
             DialogResult dlg = SaveText.ShowDialog();       // set dialog result
             // terinary operator = condition ? statement 1: statement 2:
             int cond = dlg == DialogResult.Cancel ? cond = 1 : dlg == DialogResult.OK ? cond = 2: cond = 0;
@@ -439,7 +441,7 @@ namespace Lists
                         }
                         toolStripStatusLabel1.Text = "Save Success";
                     }
-                    catch (IOException)
+                    catch (Exception)
                     {
                         MessageBox.Show("Cannot Save File");                            // Error trapping
                     }
