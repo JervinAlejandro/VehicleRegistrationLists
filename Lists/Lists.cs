@@ -73,12 +73,20 @@ namespace Lists
             // Temp counter
             int fileNameCounter = 1;
             // Default file name with counter
-            string fileName = "demo_" + fileNameCounter + ".txt";
+            string fileName = "demo_0" + fileNameCounter + ".txt";
             // If file already exist, add one to counter
             while (File.Exists(fileName))
             {
                 fileNameCounter++;
-                fileName = "demo_" + fileNameCounter + ".txt";
+                if(fileNameCounter < 10)
+                {
+                    fileName = "demo_0" + fileNameCounter + ".txt";
+                }
+                else
+                {
+                    fileName = "demo_" + fileNameCounter + ".txt";
+                }
+                
             }
             // Get every line of text from the list and save to filename
             using (Stream stream = File.Open(fileName, FileMode.Create))    // Stream allows reading and writing bytes
@@ -489,5 +497,7 @@ namespace Lists
 
         }
         #endregion
+
+
     }
 }
