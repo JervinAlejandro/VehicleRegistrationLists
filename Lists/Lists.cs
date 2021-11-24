@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -68,10 +68,30 @@ namespace Lists
 
         }
         // Auto save file when closed
-        private void Lists_FormClosing(object sender, FormClosingEventArgs e)
+        private void Lists_FormClosing_1(object sender, FormClosingEventArgs e)
         {
-
+            // Temp counter
+            int fileNameCounter = 1;
+            // Default file name with counter
+            string fileName = "demo_" + fileNameCounter + ".txt";
+            // If file already exist, add one to counter
+            while (File.Exists(fileName))
+            {
+                fileNameCounter++;
+                fileName = "demo_" + fileNameCounter + ".txt";
+            }
+            // Get every line of text from the list and save to filename
+            using (Stream stream = File.Open(fileName, FileMode.Create))    // Stream allows reading and writing bytes
+            {
+                BinaryFormatter binaryF = new BinaryFormatter();            // Instance of binaryformatter to serialize or deserialize
+                foreach (var text in RegoPlate)
+                {
+                    binaryF.Serialize(stream, text);                        // Converters stream to 1s and 0s
+                }
+            }
+            toolStripStatusLabel1.Text = "Save Success";
         }
+     
         // PR: Selected data is displayed in the TextBox on the right
         private void listDisplay_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -195,8 +215,6 @@ namespace Lists
                     ccTextBox();
                     break;
             }
-
-
         }
         // CR: Edit or update an existing rego plate
         // PR: Select an item from the ListBox to edit
@@ -247,7 +265,6 @@ namespace Lists
                     ccTextBox();
                     break;
             }
-
         }
         #endregion BUTTONS_1
 
@@ -471,7 +488,6 @@ namespace Lists
             }
 
         }
-        #endregion 
-
+        #endregion
     }
 }
